@@ -1,0 +1,35 @@
+@model IEnumerable<Intelectah.Models.Fabricante>
+@{
+    ViewBag.Title = "Fabricantes";
+}
+<h2>Fabricantes</h2>
+<p>
+    @Html.ActionLink("Adicionar Novo Fabricante", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>País de Origem</th>
+            <th>Ano de Fundação</th>
+            <th>Website</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Nome</td>
+            <td>@item.PaisOrigem</td>
+            <td>@item.AnoFundacao</td>
+            <td>@item.Website</td>
+            <td>
+                @Html.ActionLink("Detalhes", "Details", new { id = item.FabricanteID }, new { @class = "btn btn-info btn-sm" })
+                @Html.ActionLink("Editar", "Edit", new { id = item.FabricanteID }, new { @class = "btn btn-warning btn-sm" })
+                @Html.ActionLink("Excluir", "Delete", new { id = item.FabricanteID }, new { @class = "btn btn-danger btn-sm" })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,22 @@
+@model Intelectah.Models.Fabricante
+@{
+    ViewBag.Title = "Detalhes do Fabricante";
+}
+<h2>Detalhes do Fabricante</h2>
+<div class="form-horizontal">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Nome</dt>
+        <dd>@Model.Nome</dd>
+        <dt>País de Origem</dt>
+        <dd>@Model.PaisOrigem</dd>
+        <dt>Ano de Fundação</dt>
+        <dd>@Model.AnoFundacao</dd>
+        <dt>Website</dt>
+        <dd>@Model.Website</dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.FabricanteID }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+</p>
