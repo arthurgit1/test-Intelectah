@@ -1,0 +1,9 @@
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.AssemblyInfoInputs.cache
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.AssemblyInfo.cs
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.csproj.CoreCompileInputs.cache
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.MvcApplicationPartsAssemblyInfo.cache
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.RazorAssemblyInfo.cache
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.RazorAssemblyInfo.cs
+D:\GitHub\test-Intelectah\Intelectah\obj\Debug\net9.0\Intelectah.sourcelink.json
