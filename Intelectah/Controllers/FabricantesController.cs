@@ -1,130 +1,85 @@
-using System;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
 using Intelectah.Models;
-using Intelectah.Services.Interfaces;
-using Intelectah.ViewModels;
+using Intelectah.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Intelectah.Controllers
 {
     public class FabricantesController : Controller
     {
-        private readonly IFabricanteService _service;
+        private readonly IFabricanteRepository _repository;
 
-        public FabricantesController(IFabricanteService service)
+        public FabricantesController(IFabricanteRepository repository)
         {
-            _service = service;
+            _repository = repository;
         }
 
-        // GET: Fabricantes
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            var fabricantes = _service.ListarTodos();
+            var fabricantes = _repository.GetAll();
             return View(fabricantes);
         }
 
-        // GET: Fabricantes/Details/5
-        public ActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var fabricante = _service.BuscarPorId(id.Value);
-            if (fabricante == null)
-                return HttpNotFound();
+            var fabricante = _repository.GetById(id);
+            if (fabricante == null) return NotFound();
             return View(fabricante);
         }
 
-        // GET: Fabricantes/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Fabricantes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FabricanteViewModel vm)
+        public IActionResult Create(Fabricante fabricante)
         {
+            if (_repository.ExistsByName(fabricante.Nome))
+                ModelState.AddModelError("Nome", "Já existe um fabricante com esse nome.");
+
             if (ModelState.IsValid)
             {
-                var fabricante = new Fabricante
-                {
-                    Nome = vm.Nome,
-                    PaisOrigem = vm.PaisOrigem,
-                    AnoFundacao = vm.AnoFundacao,
-                    Website = vm.Website
-                };
-                try
-                {
-                    _service.Criar(fabricante);
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
+                _repository.Add(fabricante);
+                return RedirectToAction(nameof(Index));
             }
-            return View(vm);
-        }
-
-        // GET: Fabricantes/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var fabricante = _service.BuscarPorId(id.Value);
-            if (fabricante == null)
-                return HttpNotFound();
-            var vm = new FabricanteViewModel
-            {
-                FabricanteID = fabricante.FabricanteID,
-                Nome = fabricante.Nome,
-                PaisOrigem = fabricante.PaisOrigem,
-                AnoFundacao = fabricante.AnoFundacao,
-                Website = fabricante.Website
-            };
-            return View(vm);
-        }
-
-        // POST: Fabricantes/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(FabricanteViewModel vm)
-        {
-            if (ModelState.IsValid)
-            {
-                var fabricante = _service.BuscarPorId(vm.FabricanteID.Value);
-                if (fabricante == null)
-                    return HttpNotFound();
-                fabricante.Nome = vm.Nome;
-                fabricante.PaisOrigem = vm.PaisOrigem;
-                fabricante.AnoFundacao = vm.AnoFundacao;
-                fabricante.Website = vm.Website;
-                _service.Atualizar(fabricante);
-                return RedirectToAction("Index");
-            }
-            return View(vm);
-        }
-
-        // GET: Fabricantes/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var fabricante = _service.BuscarPorId(id.Value);
-            if (fabricante == null)
-                return HttpNotFound();
             return View(fabricante);
         }
 
-        // POST: Fabricantes/Delete/5
+        public IActionResult Edit(int id)
+        {
+            var fabricante = _repository.GetById(id);
+            if (fabricante == null) return NotFound();
+            return View(fabricante);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Fabricante fabricante)
+        {
+            if (id != fabricante.FabricanteID) return NotFound();
+
+            if (ModelState.IsValid)
+            {
+                _repository.Update(fabricante);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(fabricante);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var fabricante = _repository.GetById(id);
+            if (fabricante == null) return NotFound();
+            return View(fabricante);
+        }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            _service.Remover(id);
-            return RedirectToAction("Index");
+            _repository.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
