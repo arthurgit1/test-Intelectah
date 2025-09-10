@@ -1,14 +1,15 @@
-using System.Data.Entity;
 using Intelectah.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Intelectah.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() : base("DefaultConnection") { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
 
         public DbSet<Fabricante> Fabricantes { get; set; }
-
-        // ...outros DbSets futuramente...
     }
 }
