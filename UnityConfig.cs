@@ -12,7 +12,7 @@ namespace Intelectah
         public static void RegisterComponents(IUnityContainer container)
         {
             // ...existing code...
-            container.RegisterType<IFabricanteRepository, FabricanteRepository>();
+            container.RegisterType<Intelectah.Repositories.Interfaces.IFabricanteRepository, Intelectah.Repositories.FabricanteRepository>();
             container.RegisterType<IFabricanteService, FabricanteService>();
             // ...existing code...
         }
