@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using Intelectah.Data;
 using Intelectah.Models;
 using Intelectah.Repositories.Interfaces;
-using Intelectah.Data;
 
 namespace Intelectah.Repositories
 {
     public class FabricanteRepository : IFabricanteRepository
     {
         private readonly ApplicationDbContext _context;
+
         public FabricanteRepository(ApplicationDbContext context)
         {
             _context = context;
