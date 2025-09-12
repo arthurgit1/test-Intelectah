@@ -1,0 +1,28 @@
+@model Intelectah.Models.Veiculo
+
+@{
+    ViewData["Title"] = "Detalhes do Veículo";
+}
+
+<h2>Detalhes do Veículo</h2>
+
+<div>
+    <h4>Veículo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Modelo</dt>
+        <dd class="col-sm-10">@Model.Modelo</dd>
+        <dt class="col-sm-2">Cor</dt>
+        <dd class="col-sm-10">@Model.Cor</dd>
+        <dt class="col-sm-2">Ano</dt>
+        <dd class="col-sm-10">@Model.Ano</dd>
+        <dt class="col-sm-2">Placa</dt>
+        <dd class="col-sm-10">@Model.Placa</dd>
+        <dt class="col-sm-2">Preço</dt>
+        <dd class="col-sm-10">@Model.Preco.ToString("C")</dd>
+        <dt class="col-sm-2">Fabricante</dt>
+        <dd class="col-sm-10">@Model.Fabricante?.Nome</dd>
+    </dl>
+</div>
+<a asp-action="Edit" asp-route-id="@Model.VeiculoID" class="btn btn-warning">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Voltar</a>

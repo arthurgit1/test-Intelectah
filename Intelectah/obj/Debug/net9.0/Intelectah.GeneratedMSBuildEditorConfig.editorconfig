@@ -64,6 +64,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/GitHub/test-Intelectah/Intelectah/Views/Veiculos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVpY3Vsb3NcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Veiculos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVpY3Vsb3NcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Veiculos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVpY3Vsb3NcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Veiculos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVpY3Vsb3NcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Veiculos/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVpY3Vsb3NcaW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitHub/test-Intelectah/Intelectah/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

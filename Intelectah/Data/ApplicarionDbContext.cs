@@ -11,5 +11,6 @@ namespace Intelectah.Data
         }
 
         public DbSet<Fabricante> Fabricantes { get; set; }
+        public DbSet<Veiculo> Veiculos { get; set; }
     }
 }

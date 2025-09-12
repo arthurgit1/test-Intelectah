@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Intelectah")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+92ddd3065f17aedd7ed259e90449e12a27a4c00d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89ec5d086d59c9391624bc819766489f70ba59e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Intelectah")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Intelectah")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

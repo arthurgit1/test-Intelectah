@@ -1,0 +1,43 @@
+@model IEnumerable<Intelectah.Models.Veiculo>
+
+@{
+    ViewData["Title"] = "Lista de Veículos";
+}
+
+<h2>Lista de Veículos</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Novo Veículo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Modelo</th>
+            <th>Cor</th>
+            <th>Ano</th>
+            <th>Placa</th>
+            <th>Preço</th>
+            <th>Fabricante</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Modelo</td>
+            <td>@item.Cor</td>
+            <td>@item.Ano</td>
+            <td>@item.Placa</td>
+            <td>@item.Preco.ToString("C")</td>
+            <td>@item.Fabricante?.Nome</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VeiculoID" class="btn btn-warning btn-sm">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.VeiculoID" class="btn btn-info btn-sm">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@item.VeiculoID" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
