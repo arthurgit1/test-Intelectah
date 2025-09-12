@@ -85,6 +85,7 @@ namespace Intelectah.Controllers
                 _context.Add(concessionaria);
                 await _context.SaveChangesAsync();
                 _cache.Remove("concessionarias_ativas");
+                TempData["SuccessMessage"] = "Concessionária cadastrada com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(concessionaria);
@@ -125,6 +126,7 @@ namespace Intelectah.Controllers
                     else
                         throw;
                 }
+                TempData["SuccessMessage"] = "Concessionária editada com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(concessionaria);
@@ -156,6 +158,7 @@ namespace Intelectah.Controllers
                 await _context.SaveChangesAsync();
                 _cache.Remove("concessionarias_ativas");
             }
+            TempData["SuccessMessage"] = "Concessionária excluída com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

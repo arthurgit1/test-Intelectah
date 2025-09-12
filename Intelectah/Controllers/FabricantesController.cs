@@ -69,6 +69,7 @@ namespace Intelectah.Controllers
                 _context.Add(fabricante);
                 await _context.SaveChangesAsync();
                 _cache.Remove("fabricantes_ativos");
+                TempData["SuccessMessage"] = "Fabricante cadastrado com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(fabricante);
@@ -113,6 +114,7 @@ namespace Intelectah.Controllers
                     else
                         throw;
                 }
+                TempData["SuccessMessage"] = "Fabricante editado com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(fabricante);
@@ -143,6 +145,7 @@ namespace Intelectah.Controllers
                 await _context.SaveChangesAsync();
                 _cache.Remove("fabricantes_ativos");
             }
+            TempData["SuccessMessage"] = "Fabricante excluído com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

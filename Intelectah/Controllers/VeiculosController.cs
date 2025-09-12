@@ -72,6 +72,7 @@ namespace Intelectah.Controllers
                 _context.Add(veiculo);
                 await _context.SaveChangesAsync();
                 _cache.Remove("veiculos_ativos");
+                TempData["SuccessMessage"] = "Veículo cadastrado com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FabricanteID"] = new SelectList(_context.Fabricantes, "FabricanteID", "Nome", veiculo.FabricanteID);
@@ -118,6 +119,7 @@ namespace Intelectah.Controllers
                     else
                         throw;
                 }
+                TempData["SuccessMessage"] = "Veículo editado com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FabricanteID"] = new SelectList(_context.Fabricantes, "FabricanteID", "Nome", veiculo.FabricanteID);
@@ -150,6 +152,7 @@ namespace Intelectah.Controllers
                 await _context.SaveChangesAsync();
                 _cache.Remove("veiculos_ativos");
             }
+            TempData["SuccessMessage"] = "Veículo excluído com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

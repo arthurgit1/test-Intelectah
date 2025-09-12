@@ -67,6 +67,7 @@ namespace Intelectah.Controllers
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 _cache.Remove("clientes_ativos"); // Invalida cache
+                TempData["SuccessMessage"] = "Cliente cadastrado com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
@@ -107,6 +108,7 @@ namespace Intelectah.Controllers
                     else
                         throw;
                 }
+                TempData["SuccessMessage"] = "Cliente editado com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
@@ -137,6 +139,7 @@ namespace Intelectah.Controllers
                 await _context.SaveChangesAsync();
                 _cache.Remove("clientes_ativos"); // Invalida cache
             }
+            TempData["SuccessMessage"] = "Cliente excluído com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

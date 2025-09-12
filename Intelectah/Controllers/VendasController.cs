@@ -62,6 +62,7 @@ namespace Intelectah.Controllers
             {
                 _context.Add(venda);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Venda cadastrada com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteID"] = new SelectList(_context.Clientes, "ClienteID", "Nome", venda.ClienteID);
@@ -104,6 +105,7 @@ namespace Intelectah.Controllers
                     else
                         throw;
                 }
+                TempData["SuccessMessage"] = "Venda editada com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClienteID"] = new SelectList(_context.Clientes, "ClienteID", "Nome", venda.ClienteID);
@@ -139,6 +141,7 @@ namespace Intelectah.Controllers
                 _context.Vendas.Update(venda);
                 await _context.SaveChangesAsync();
             }
+            TempData["SuccessMessage"] = "Venda excluída com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

@@ -4,38 +4,53 @@
     ViewData["Title"] = "Lista de Vendas";
 }
 
-<h2>Lista de Vendas</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0"><i class="bi bi-cash-coin me-2"></i>Lista de Vendas</h2>
+    <a asp-action="Create" class="btn btn-primary shadow-sm">
+        <i class="bi bi-plus-circle me-1"></i> Nova Venda
+    </a>
+</div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Nova Venda</a>
-</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Cliente</th>
-            <th>Veículo</th>
-            <th>Concessionária</th>
-            <th>Data da Venda</th>
-            <th>Valor</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Cliente?.Nome</td>
-            <td>@item.Veiculo?.Modelo</td>
-            <td>@item.Concessionaria?.Nome</td>
-            <td>@item.DataVenda.ToShortDateString()</td>
-            <td>@item.Valor.ToString("C")</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.VendaID" class="btn btn-warning btn-sm">Editar</a>
-                <a asp-action="Details" asp-route-id="@item.VendaID" class="btn btn-info btn-sm">Detalhes</a>
-                <a asp-action="Delete" asp-route-id="@item.VendaID" class="btn btn-danger btn-sm">Excluir</a>
-            </td>
-        </tr>
+<div class="table-responsive rounded shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+            <tr>
+                <th><i class="bi bi-person"></i> Cliente</th>
+                <th><i class="bi bi-car-front"></i> Veículo</th>
+                <th><i class="bi bi-shop"></i> Concessionária</th>
+                <th><i class="bi bi-calendar"></i> Data da Venda</th>
+                <th><i class="bi bi-currency-dollar"></i> Valor</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Cliente?.Nome</td>
+                <td>@item.Veiculo?.Modelo</td>
+                <td>@item.Concessionaria?.Nome</td>
+                <td>@item.DataVenda.ToShortDateString()</td>
+                <td>@item.Valor.ToString("C")</td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@item.VendaID" class="btn btn-warning btn-sm me-1" title="Editar">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.VendaID" class="btn btn-info btn-sm me-1" title="Detalhes">
+                        <i class="bi bi-info-circle"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.VendaID" class="btn btn-danger btn-sm" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+        transition: background 0.2s;
     }
-    </tbody>
-</table>
+</style>

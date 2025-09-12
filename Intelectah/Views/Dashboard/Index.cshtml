@@ -39,12 +39,13 @@
     }
 }
 
+
 <div class="row mb-4">
-    <div class="col-md-12">
-        <form class="form-inline" method="get" id="exportForm">
-            <div class="form-group mr-2">
-                <label for="mes" class="mr-1">Mês:</label>
-                <select id="mes" name="mes" class="form-control">
+    <div class="col-12">
+        <form class="row g-2 align-items-end" method="get" id="exportForm">
+            <div class="col-auto">
+                <label for="mes" class="form-label mb-0">Mês:</label>
+                <select id="mes" name="mes" class="form-select">
                     @for (int m = 1; m <= 12; m++)
                     {
                         if (m == now.Month)
@@ -58,9 +59,9 @@
                     }
                 </select>
             </div>
-            <div class="form-group mr-2">
-                <label for="ano" class="mr-1">Ano:</label>
-                <select id="ano" name="ano" class="form-control">
+            <div class="col-auto">
+                <label for="ano" class="form-label mb-0">Ano:</label>
+                <select id="ano" name="ano" class="form-select">
                     @for (int y = now.Year - 5; y <= now.Year; y++)
                     {
                         if (y == now.Year)
@@ -74,8 +75,14 @@
                     }
                 </select>
             </div>
-            <button type="button" class="btn btn-success mr-2" onclick="exportar('pdf')">Exportar PDF</button>
-            <button type="button" class="btn btn-primary" onclick="exportar('excel')">Exportar Excel</button>
+            <div class="col-auto">
+                <button type="button" class="btn btn-success shadow-sm me-2" onclick="exportar('pdf')">
+                    <i class="bi bi-file-earmark-pdf me-1"></i> Exportar PDF
+                </button>
+                <button type="button" class="btn btn-primary shadow-sm" onclick="exportar('excel')">
+                    <i class="bi bi-file-earmark-excel me-1"></i> Exportar Excel
+                </button>
+            </div>
         </form>
     </div>
 </div>
@@ -92,37 +99,55 @@
     }
 </script>
 
-<h2>Dashboard de Relatórios</h2>
 
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-header">Total de Clientes</div>
+        <div class="card text-white bg-primary mb-3 shadow-sm">
+            <div class="card-header d-flex align-items-center">
+                <i class="bi bi-people-fill me-2"></i> Total de Clientes
+            </div>
             <div class="card-body">
-                <h4 class="card-title">@totalClientes</h4>
+                <h4 class="card-title mb-0">@totalClientes</h4>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+
+<div class="row g-4">
     <div class="col-md-6">
-        <h4>Vendas por Mês (últimos 12 meses)</h4>
-        <canvas id="chartVendasMes"></canvas>
+        <div class="card shadow-sm">
+            <div class="card-header"><i class="bi bi-bar-chart me-2"></i>Vendas por Mês (últimos 12 meses)</div>
+            <div class="card-body">
+                <canvas id="chartVendasMes"></canvas>
+            </div>
+        </div>
     </div>
     <div class="col-md-6">
-        <h4>Vendas por Tipo de Veículo</h4>
-        <canvas id="chartVendasTipo"></canvas>
+        <div class="card shadow-sm">
+            <div class="card-header"><i class="bi bi-pie-chart me-2"></i>Vendas por Tipo de Veículo</div>
+            <div class="card-body">
+                <canvas id="chartVendasTipo"></canvas>
+            </div>
+        </div>
     </div>
 </div>
-<div class="row mt-4">
+<div class="row g-4 mt-2">
     <div class="col-md-6">
-        <h4>Vendas por Fabricante</h4>
-        <canvas id="chartVendasFabricante"></canvas>
+        <div class="card shadow-sm">
+            <div class="card-header"><i class="bi bi-bar-chart me-2"></i>Vendas por Fabricante</div>
+            <div class="card-body">
+                <canvas id="chartVendasFabricante"></canvas>
+            </div>
+        </div>
     </div>
     <div class="col-md-6">
-        <h4>Vendas por Concessionária</h4>
-        <canvas id="chartVendasConcessionaria"></canvas>
+        <div class="card shadow-sm">
+            <div class="card-header"><i class="bi bi-bar-chart me-2"></i>Vendas por Concessionária</div>
+            <div class="card-body">
+                <canvas id="chartVendasConcessionaria"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 
