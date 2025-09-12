@@ -31,3 +31,11 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.Run();
+
+public class SomeEntity
+{
+    public int Id { get; set; }
+    public string? Nome { get; set; }
+    public string? PaisOrigem { get; set; }
+    public string? Website { get; set; }
+}
