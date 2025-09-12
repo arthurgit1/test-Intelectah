@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Intelectah.Data;
 using Intelectah.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Intelectah.Controllers
 {
@@ -12,11 +13,13 @@ namespace Intelectah.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly Intelectah.Services.ViaCepService _viaCepService;
+        private readonly IMemoryCache _cache;
 
-        public ConcessionariasController(ApplicationDbContext context, Intelectah.Services.ViaCepService viaCepService)
+        public ConcessionariasController(ApplicationDbContext context, Intelectah.Services.ViaCepService viaCepService, IMemoryCache cache)
         {
             _context = context;
             _viaCepService = viaCepService;
+            _cache = cache;
         }
         // GET: Concessionarias/BuscarEnderecoPorCep?cep=01001000
         [HttpGet]
@@ -40,8 +43,14 @@ namespace Intelectah.Controllers
         // GET: Concessionarias
         public async Task<IActionResult> Index()
         {
-            // Exibir apenas registros ativos
-            return View(await _context.Concessionarias.Where(c => c.IsAtivo).ToListAsync());
+            const string cacheKey = "concessionarias_ativas";
+            if (!_cache.TryGetValue(cacheKey, out List<Concessionaria>? concessionarias))
+            {
+                concessionarias = await _context.Concessionarias.Where(c => c.IsAtivo).ToListAsync();
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
+                _cache.Set(cacheKey, concessionarias, cacheEntryOptions);
+            }
+            return View(concessionarias);
         }
 
         // GET: Concessionarias/Details/5
@@ -75,6 +84,7 @@ namespace Intelectah.Controllers
             {
                 _context.Add(concessionaria);
                 await _context.SaveChangesAsync();
+                _cache.Remove("concessionarias_ativas");
                 return RedirectToAction(nameof(Index));
             }
             return View(concessionaria);
@@ -106,6 +116,7 @@ namespace Intelectah.Controllers
                 {
                     _context.Update(concessionaria);
                     await _context.SaveChangesAsync();
+                    _cache.Remove("concessionarias_ativas");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -143,6 +154,7 @@ namespace Intelectah.Controllers
                 concessionaria.IsAtivo = false;
                 _context.Concessionarias.Update(concessionaria);
                 await _context.SaveChangesAsync();
+                _cache.Remove("concessionarias_ativas");
             }
             return RedirectToAction(nameof(Index));
         }

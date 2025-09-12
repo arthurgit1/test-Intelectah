@@ -12,6 +12,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Intelectah.Tests
 {
@@ -52,7 +53,7 @@ namespace Intelectah.Tests
 
     public class ClientesControllerTests
     {
-    private ApplicationDbContext GetDbContextWithData()
+        private ApplicationDbContext GetDbContextWithData()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "TestDb")
@@ -72,7 +73,8 @@ namespace Intelectah.Tests
         {
             // Arrange
             var context = GetDbContextWithData();
-            var controller = new ClientesController(context);
+            var mockCache = new Mock<IMemoryCache>();
+            var controller = new ClientesController(context, mockCache.Object);
 
             // Act
             var result = await controller.Index();

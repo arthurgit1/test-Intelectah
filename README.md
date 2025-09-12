@@ -1,3 +1,98 @@
+# Intelectah - Sistema de Gestão de Concessionárias
+
+## Visão Geral
+
+Este projeto é uma aplicação ASP.NET Core MVC para gestão de concessionárias, veículos, fabricantes, clientes e vendas. Ele demonstra padrões avançados de desenvolvimento, integrações externas, validações customizadas, deleção lógica, autenticação, dashboards, exportação de dados e documentação de API.
+
+## Funcionalidades
+
+- CRUD completo para Concessionárias, Veículos, Fabricantes, Clientes e Vendas
+- Deleção lógica (soft delete) para todas as entidades
+- Autenticação e autorização com ASP.NET Core Identity (roles: Admin, Usuario)
+- Dashboard com gráficos (Chart.js) e exportação (Excel/PDF)
+- Integração com ViaCEP para busca de endereço por CEP
+- Validações avançadas (CPF, nome único, ano, preço, etc.)
+- Documentação de API com Swagger
+- Testes automatizados (unitários e integração)
+
+## Tecnologias Utilizadas
+
+- ASP.NET Core MVC (.NET 9)
+- Entity Framework Core (SQLite)
+- ASP.NET Core Identity
+- Chart.js
+- ClosedXML (Excel), QuestPDF (PDF)
+- Swashbuckle (Swagger)
+- xUnit, Moq
+
+## Como Executar
+
+1. **Pré-requisitos:**
+   - .NET 9 SDK
+   - VS Code ou Visual Studio
+
+2. **Restaurar dependências:**
+   ```
+   dotnet restore
+   ```
+
+3. **Aplicar migrações e criar banco:**
+   ```
+   dotnet ef database update --project Intelectah/Intelectah.csproj
+   ```
+
+4. **Executar a aplicação:**
+   ```
+   dotnet run --project Intelectah/Intelectah.csproj
+   ```
+   Acesse: https://localhost:5001
+
+5. **Acessar Swagger (documentação da API):**
+   https://localhost:5001/swagger
+
+6. **Login padrão:**
+   - Usuário: admin@admin.com
+   - Senha: Admin123!
+
+## Estrutura do Projeto
+
+- `Intelectah/` - Projeto principal (MVC, Models, Controllers, Views, Services)
+- `Intelectah.Tests/` - Testes automatizados (unitários e integração)
+
+## Testes Automatizados
+
+Para rodar os testes:
+```sh
+dotnet test Intelectah.Tests/Intelectah.Tests.csproj
+```
+
+## Observações Técnicas
+
+- **Deleção lógica:** Todos os CRUDs usam o campo `Ativo`/`IsAtivo` para soft delete.
+- **Validações:**
+  - CPF: Validação customizada (DataAnnotation)
+  - Nome único: Fabricante, Concessionária, Cliente
+  - Ano e preço: Veículo
+- **ViaCEP:** Busca automática de endereço no cadastro de Concessionária.
+- **Exportação:** Dashboard permite exportar dados em Excel e PDF.
+- **Swagger:** Documentação interativa dos endpoints da API.
+- **Testes:** Exemplos de teste unitário (controller) e integração (endpoint real).
+
+## Melhorias Sugeridas
+
+- Implementar caching para performance
+- Melhorar tratamento de warnings de nullability
+- Adicionar mais testes automatizados
+- Customizar ainda mais o Swagger (exemplos, versionamento)
+
+## Contato
+
+Desenvolvido para o teste técnico Intelectah.
+
+---
+
+# Requisitos Originais do Desafio
+
 Desafio Técnico para Desenvolvedores – Intelectah
 Objetivo: Desenvolver uma aplicação web para a gestão de concessionárias de veículos utilizando
 Asp.net MVC e Entity Framework. O sistema deve permitir o gerenciamento de fabricantes de veículos,
@@ -298,3 +393,106 @@ o Senhas devem ser criptografadas e armazenadas com segurança.
 o Autenticação deve ser gerida por um framework como ASP.NET Identity.
 Este modelo de dados abrange todas as funcionalidades requeridas no desafio técnico, garantindo uma
 estrutura clara e lógica para o desenvolvimento da aplicação.
+
+## Exemplos de Uso da API
+
+### Autenticação
+A autenticação é baseada em ASP.NET Core Identity. Para acessar endpoints protegidos, faça login via interface web ou configure um token/cookie de autenticação.
+
+### Exemplo: Listar Clientes (GET)
+```
+GET /Clientes
+```
+Retorna a lista de clientes ativos.
+
+### Exemplo: Criar Cliente (POST)
+```
+POST /Clientes/Create
+Content-Type: application/x-www-form-urlencoded
+
+Nome=João Silva&CPF=12345678909&Endereco=Rua+1&Telefone=11999999999&Email=joao@email.com
+```
+
+### Exemplo: Editar Cliente (POST)
+```
+POST /Clientes/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+ClienteID=1&Nome=João+Silva&CPF=12345678909&Endereco=Rua+1&Telefone=11999999999&Email=joao@email.com&Ativo=true
+```
+
+### Exemplo: Deletar Cliente (POST)
+```
+POST /Clientes/Delete/1
+```
+
+### Exemplo: Buscar endereço por CEP (ViaCEP)
+```
+GET /Concessionarias/BuscarEnderecoPorCep?cep=01001000
+```
+
+## Principais Endpoints
+
+| Rota                        | Método | Descrição                                 |
+|-----------------------------|--------|-------------------------------------------|
+| /Clientes                   | GET    | Lista clientes ativos                     |
+| /Clientes/Create            | POST   | Cria novo cliente                         |
+| /Clientes/Edit/{id}         | POST   | Edita cliente                             |
+| /Clientes/Delete/{id}       | POST   | Deleção lógica de cliente                 |
+| /Concessionarias            | GET    | Lista concessionárias                     |
+| /Veiculos                   | GET    | Lista veículos                            |
+| /Vendas                     | GET    | Lista vendas                              |
+| /Dashboard                  | GET    | Dashboard de vendas                       |
+| /Dashboard/ExportarExcel    | GET    | Exporta relatório em Excel                |
+| /Dashboard/ExportarPdf      | GET    | Exporta relatório em PDF                  |
+| /swagger                    | GET    | Documentação interativa da API            |
+
+## Fluxo de Autenticação e Roles
+
+- Usuários são cadastrados via interface web.
+- Roles disponíveis: Admin, Usuario
+- Apenas Admin pode acessar cadastros e deleção de entidades.
+- Usuário comum pode visualizar dados e realizar vendas.
+- O login padrão é criado automaticamente na primeira execução:
+  - Usuário: admin@admin.com
+  - Senha: Admin123!
+
+## Arquitetura do Projeto
+
+- **Camada de Apresentação:** Controllers e Views (Razor)
+- **Camada de Negócio:** Services e validações customizadas
+- **Camada de Dados:** Entity Framework Core (DbContext, Models)
+- **Autenticação:** ASP.NET Core Identity
+- **Integração Externa:** ViaCepService (HttpClient)
+- **Exportação:** ClosedXML (Excel), QuestPDF (PDF)
+- **Testes:** xUnit, Moq, WebApplicationFactory
+
+## Padrões e Boas Práticas
+
+- Injeção de dependência para todos os serviços
+- Validações customizadas com DataAnnotations
+- Soft delete (campo Ativo/IsAtivo)
+- Uso de ViewModels e Bind nos controllers
+- Separação de responsabilidades por camada
+- Testes automatizados (unitários e integração)
+- Documentação automática com Swagger
+
+## Customização e Configuração
+
+- **Connection String:** Editar em `Intelectah/appsettings.json`.
+- **Variáveis de ambiente:** Podem ser usadas para sobrescrever configurações sensíveis.
+- **Porta e HTTPS:** Configurável em `launchSettings.json` ou via argumentos de linha de comando.
+- **Swagger:** Customizável em `Program.cs` (ex: título, descrição, versionamento).
+
+## Publicação e Deploy
+
+1. Compile o projeto para Release:
+   ```
+   dotnet publish Intelectah/Intelectah.csproj -c Release -o ./publish
+   ```
+2. Configure o banco de dados e variáveis de ambiente no servidor.
+3. Suba os arquivos da pasta `publish` para o servidor de aplicação (IIS, Azure, Linux, etc).
+4. Execute:
+   ```
+   dotnet Intelectah.dll
+   ```

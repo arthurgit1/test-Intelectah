@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Intelectah.Data;
 using Intelectah.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Intelectah.Controllers
 {
@@ -12,17 +13,25 @@ namespace Intelectah.Controllers
     public class VeiculosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMemoryCache _cache;
 
-        public VeiculosController(ApplicationDbContext context)
+        public VeiculosController(ApplicationDbContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         // GET: Veiculos
         public async Task<IActionResult> Index()
         {
-            var veiculos = _context.Veiculos.Include(v => v.Fabricante).Where(v => v.Ativo);
-            return View(await veiculos.ToListAsync());
+            const string cacheKey = "veiculos_ativos";
+            if (!_cache.TryGetValue(cacheKey, out List<Veiculo>? veiculos))
+            {
+                veiculos = await _context.Veiculos.Include(v => v.Fabricante).Where(v => v.Ativo).ToListAsync();
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
+                _cache.Set(cacheKey, veiculos, cacheEntryOptions);
+            }
+            return View(veiculos);
         }
 
         // GET: Veiculos/Details/5
@@ -62,6 +71,7 @@ namespace Intelectah.Controllers
             {
                 _context.Add(veiculo);
                 await _context.SaveChangesAsync();
+                _cache.Remove("veiculos_ativos");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["FabricanteID"] = new SelectList(_context.Fabricantes, "FabricanteID", "Nome", veiculo.FabricanteID);
@@ -99,6 +109,7 @@ namespace Intelectah.Controllers
                 {
                     _context.Update(veiculo);
                     await _context.SaveChangesAsync();
+                    _cache.Remove("veiculos_ativos");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -137,6 +148,7 @@ namespace Intelectah.Controllers
                 veiculo.Ativo = false;
                 _context.Veiculos.Update(veiculo);
                 await _context.SaveChangesAsync();
+                _cache.Remove("veiculos_ativos");
             }
             return RedirectToAction(nameof(Index));
         }

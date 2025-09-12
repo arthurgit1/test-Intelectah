@@ -4,23 +4,35 @@ using Microsoft.EntityFrameworkCore;
 using Intelectah.Data;
 using Intelectah.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Intelectah.Controllers
 {
     [Authorize(Roles = "Admin")]
+
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMemoryCache _cache;
 
-        public ClientesController(ApplicationDbContext context)
+        public ClientesController(ApplicationDbContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clientes.Where(c => c.Ativo).ToListAsync());
+            const string cacheKey = "clientes_ativos";
+            if (!_cache.TryGetValue(cacheKey, out List<Cliente>? clientes))
+            {
+                clientes = await _context.Clientes.Where(c => c.Ativo).ToListAsync();
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+                _cache.Set(cacheKey, clientes, cacheEntryOptions);
+            }
+            return View(clientes);
         }
 
         // GET: Clientes/Details/5
@@ -54,6 +66,7 @@ namespace Intelectah.Controllers
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
+                _cache.Remove("clientes_ativos"); // Invalida cache
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
@@ -85,6 +98,7 @@ namespace Intelectah.Controllers
                 {
                     _context.Update(cliente);
                     await _context.SaveChangesAsync();
+                    _cache.Remove("clientes_ativos"); // Invalida cache
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,6 +135,7 @@ namespace Intelectah.Controllers
                 cliente.Ativo = false;
                 _context.Clientes.Update(cliente);
                 await _context.SaveChangesAsync();
+                _cache.Remove("clientes_ativos"); // Invalida cache
             }
             return RedirectToAction(nameof(Index));
         }

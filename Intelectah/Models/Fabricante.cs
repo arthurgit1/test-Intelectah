@@ -8,11 +8,11 @@ namespace Intelectah.Models
 
         [Required]
         [StringLength(100)]
-        public string Nome { get; set; }
+    public string Nome { get; set; } = string.Empty;
 
         [Required]
         [StringLength(50)]
-        public string PaisOrigem { get; set; }
+    public string PaisOrigem { get; set; } = string.Empty;
 
         [Required]
         [Range(1800, 2100, ErrorMessage = "Ano de fundação deve ser válido e no passado.")]
@@ -20,7 +20,7 @@ namespace Intelectah.Models
 
         [Url]
         [StringLength(255)]
-        public string Website { get; set; }
+    public string Website { get; set; } = string.Empty;
 
         public bool Ativo { get; set; } = true; // Deleção lógica
     }

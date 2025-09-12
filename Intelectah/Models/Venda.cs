@@ -12,17 +12,17 @@ namespace Intelectah.Models
         public int ClienteID { get; set; }
         // Campo para deleção lógica
         public bool Ativo { get; set; } = true;
-        public Cliente Cliente { get; set; }
+    public Cliente Cliente { get; set; } = null!;
 
         [Required]
         [Display(Name = "Veículo")]
         public int VeiculoID { get; set; }
-        public Veiculo Veiculo { get; set; }
+    public Veiculo Veiculo { get; set; } = null!;
 
         [Required]
         [Display(Name = "Concessionária")]
         public int ConcessionariaID { get; set; }
-        public Concessionaria Concessionaria { get; set; }
+    public Concessionaria Concessionaria { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Date)]

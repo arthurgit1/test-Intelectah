@@ -5,13 +5,13 @@ namespace Intelectah.Models
 {
     public class CpfAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
-            if (value == null) return ValidationResult.Success;
-            var cpf = value.ToString();
+            if (value == null) return ValidationResult.Success!;
+            var cpf = value?.ToString() ?? string.Empty;
             if (!IsCpfValid(cpf))
                 return new ValidationResult("CPF inválido.");
-            return ValidationResult.Success;
+            return ValidationResult.Success!;
         }
 
         // Validação de CPF (apenas formato e dígitos)
@@ -45,24 +45,24 @@ namespace Intelectah.Models
 
         [Required]
         [StringLength(100)]
-        public string Nome { get; set; }
+    public string Nome { get; set; } = string.Empty;
 
         [Required]
         [StringLength(14)]
         [Cpf]
-        public string CPF { get; set; }
+    public string CPF { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string Endereco { get; set; }
+    public string Endereco { get; set; } = string.Empty;
 
         [Required]
         [StringLength(20)]
-        public string Telefone { get; set; }
+    public string Telefone { get; set; } = string.Empty;
 
         [EmailAddress]
         [StringLength(100)]
-        public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
         // Campo para deleção lógica
         public bool Ativo { get; set; } = true;

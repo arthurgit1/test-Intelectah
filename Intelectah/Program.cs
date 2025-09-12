@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddMemoryCache();
 
 // Registrar ViaCepService com HttpClient
 builder.Services.AddHttpClient<Intelectah.Services.ViaCepService>();

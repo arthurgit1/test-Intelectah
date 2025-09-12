@@ -8,19 +8,19 @@ namespace Intelectah.Models
 
         [Required]
         [StringLength(100)]
-        public string Nome { get; set; }
+    public string Nome { get; set; } = string.Empty;
 
         [Required]
         [StringLength(200)]
-        public string Endereco { get; set; }
+    public string Endereco { get; set; } = string.Empty;
 
         [Required]
         [StringLength(20)]
-        public string Telefone { get; set; }
+    public string Telefone { get; set; } = string.Empty;
 
         [EmailAddress]
         [StringLength(100)]
-        public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
         // Campo para deleção lógica
         public bool IsAtivo { get; set; } = true;

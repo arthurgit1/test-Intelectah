@@ -19,11 +19,11 @@ namespace Intelectah.Models
 
         [Required]
         [StringLength(100)]
-        public string Modelo { get; set; }
+    public string Modelo { get; set; } = string.Empty;
 
         [Required]
         [StringLength(50)]
-        public string Cor { get; set; }
+    public string Cor { get; set; } = string.Empty;
 
         [Required]
         [Range(1900, 2100)]
@@ -31,7 +31,7 @@ namespace Intelectah.Models
 
         [Required]
         [StringLength(20)]
-        public string Placa { get; set; }
+    public string Placa { get; set; } = string.Empty;
 
         [Required]
         public decimal Preco { get; set; }
@@ -44,7 +44,7 @@ namespace Intelectah.Models
         // Relacionamento com Fabricante
         [Display(Name = "Fabricante")]
         public int FabricanteID { get; set; }
-        public Fabricante Fabricante { get; set; }
+    public Fabricante Fabricante { get; set; } = null!;
         // Campo para deleção lógica
         public bool Ativo { get; set; } = true;
     }

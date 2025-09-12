@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Intelectah.Data;
 using Intelectah.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Intelectah.Controllers
 {
@@ -11,16 +12,25 @@ namespace Intelectah.Controllers
     public class FabricantesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMemoryCache _cache;
 
-        public FabricantesController(ApplicationDbContext context)
+        public FabricantesController(ApplicationDbContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         // GET: Fabricantes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Fabricantes.Where(f => f.Ativo).ToListAsync());
+            const string cacheKey = "fabricantes_ativos";
+            if (!_cache.TryGetValue(cacheKey, out List<Fabricante>? fabricantes))
+            {
+                fabricantes = await _context.Fabricantes.Where(f => f.Ativo).ToListAsync();
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(5));
+                _cache.Set(cacheKey, fabricantes, cacheEntryOptions);
+            }
+            return View(fabricantes);
         }
 
         // GET: Fabricantes/Details/5
@@ -58,6 +68,7 @@ namespace Intelectah.Controllers
             {
                 _context.Add(fabricante);
                 await _context.SaveChangesAsync();
+                _cache.Remove("fabricantes_ativos");
                 return RedirectToAction(nameof(Index));
             }
             return View(fabricante);
@@ -93,6 +104,7 @@ namespace Intelectah.Controllers
                 {
                     _context.Update(fabricante);
                     await _context.SaveChangesAsync();
+                    _cache.Remove("fabricantes_ativos");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,6 +141,7 @@ namespace Intelectah.Controllers
                 fabricante.Ativo = false;
                 _context.Fabricantes.Update(fabricante);
                 await _context.SaveChangesAsync();
+                _cache.Remove("fabricantes_ativos");
             }
             return RedirectToAction(nameof(Index));
         }
