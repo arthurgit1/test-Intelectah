@@ -6,12 +6,12 @@ namespace Intelectah.Services
 {
     public class ViaCepResponse
     {
-        public string Cep { get; set; }
-        public string Logradouro { get; set; }
-        public string Bairro { get; set; }
-        public string Localidade { get; set; }
-        public string Uf { get; set; }
-        public string Erro { get; set; }
+    public string Cep { get; set; } = string.Empty;
+    public string Logradouro { get; set; } = string.Empty;
+    public string Bairro { get; set; } = string.Empty;
+    public string Localidade { get; set; } = string.Empty;
+    public string Uf { get; set; } = string.Empty;
+    public string Erro { get; set; } = string.Empty;
     }
 
     public class ViaCepService
@@ -22,7 +22,7 @@ namespace Intelectah.Services
             _httpClient = httpClient;
         }
 
-        public async Task<ViaCepResponse> BuscarEnderecoPorCepAsync(string cep)
+        public async Task<ViaCepResponse?> BuscarEnderecoPorCepAsync(string cep)
         {
             var url = $"https://viacep.com.br/ws/{cep}/json/";
             var response = await _httpClient.GetAsync(url);
