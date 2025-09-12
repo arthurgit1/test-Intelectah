@@ -20,7 +20,7 @@ namespace Intelectah.Controllers
         // GET: Fabricantes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Fabricantes.ToListAsync());
+            return View(await _context.Fabricantes.Where(f => f.Ativo).ToListAsync());
         }
 
         // GET: Fabricantes/Details/5
@@ -46,6 +46,14 @@ namespace Intelectah.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FabricanteID,Nome,PaisOrigem,AnoFundacao,Website,Ativo")] Fabricante fabricante)
         {
+            if (_context.Fabricantes.Any(f => f.Nome == fabricante.Nome && f.Ativo))
+            {
+                ModelState.AddModelError("Nome", "Já existe um fabricante ativo com este nome.");
+            }
+            if (fabricante.AnoFundacao > DateTime.Now.Year)
+            {
+                ModelState.AddModelError("AnoFundacao", "Ano de fundação deve ser no passado.");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(fabricante);
@@ -71,7 +79,14 @@ namespace Intelectah.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("FabricanteID,Nome,PaisOrigem,AnoFundacao,Website,Ativo")] Fabricante fabricante)
         {
             if (id != fabricante.FabricanteID) return NotFound();
-
+            if (_context.Fabricantes.Any(f => f.Nome == fabricante.Nome && f.FabricanteID != id && f.Ativo))
+            {
+                ModelState.AddModelError("Nome", "Já existe um fabricante ativo com este nome.");
+            }
+            if (fabricante.AnoFundacao > DateTime.Now.Year)
+            {
+                ModelState.AddModelError("AnoFundacao", "Ano de fundação deve ser no passado.");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -111,7 +126,8 @@ namespace Intelectah.Controllers
             var fabricante = await _context.Fabricantes.FindAsync(id);
             if (fabricante != null)
             {
-                _context.Fabricantes.Remove(fabricante);
+                fabricante.Ativo = false;
+                _context.Fabricantes.Update(fabricante);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

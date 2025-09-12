@@ -24,7 +24,8 @@ namespace Intelectah.Controllers
             var vendas = _context.Vendas
                 .Include(v => v.Cliente)
                 .Include(v => v.Veiculo)
-                .Include(v => v.Concessionaria);
+                .Include(v => v.Concessionaria)
+                .Where(v => v.Ativo);
             return View(await vendas.ToListAsync());
         }
 
@@ -134,7 +135,8 @@ namespace Intelectah.Controllers
             var venda = await _context.Vendas.FindAsync(id);
             if (venda != null)
             {
-                _context.Vendas.Remove(venda);
+                venda.Ativo = false;
+                _context.Vendas.Update(venda);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

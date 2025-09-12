@@ -21,7 +21,7 @@ namespace Intelectah.Controllers
         // GET: Veiculos
         public async Task<IActionResult> Index()
         {
-            var veiculos = _context.Veiculos.Include(v => v.Fabricante);
+            var veiculos = _context.Veiculos.Include(v => v.Fabricante).Where(v => v.Ativo);
             return View(await veiculos.ToListAsync());
         }
 
@@ -48,8 +48,16 @@ namespace Intelectah.Controllers
         // POST: Veiculos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VeiculoID,Modelo,Cor,Ano,Placa,Preco,FabricanteID")] Veiculo veiculo)
+        public async Task<IActionResult> Create([Bind("VeiculoID,Modelo,Cor,Ano,Placa,Preco,Tipo,FabricanteID,Ativo")] Veiculo veiculo)
         {
+            if (veiculo.Ano > DateTime.Now.Year)
+            {
+                ModelState.AddModelError("Ano", "Ano de fabricação não pode ser no futuro.");
+            }
+            if (veiculo.Preco <= 0)
+            {
+                ModelState.AddModelError("Preco", "O preço deve ser um valor positivo.");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(veiculo);
@@ -74,10 +82,17 @@ namespace Intelectah.Controllers
         // POST: Veiculos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VeiculoID,Modelo,Cor,Ano,Placa,Preco,FabricanteID")] Veiculo veiculo)
+        public async Task<IActionResult> Edit(int id, [Bind("VeiculoID,Modelo,Cor,Ano,Placa,Preco,Tipo,FabricanteID,Ativo")] Veiculo veiculo)
         {
             if (id != veiculo.VeiculoID) return NotFound();
-
+            if (veiculo.Ano > DateTime.Now.Year)
+            {
+                ModelState.AddModelError("Ano", "Ano de fabricação não pode ser no futuro.");
+            }
+            if (veiculo.Preco <= 0)
+            {
+                ModelState.AddModelError("Preco", "O preço deve ser um valor positivo.");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -119,7 +134,8 @@ namespace Intelectah.Controllers
             var veiculo = await _context.Veiculos.FindAsync(id);
             if (veiculo != null)
             {
-                _context.Veiculos.Remove(veiculo);
+                veiculo.Ativo = false;
+                _context.Veiculos.Update(veiculo);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

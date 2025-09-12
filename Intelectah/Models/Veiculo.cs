@@ -45,5 +45,7 @@ namespace Intelectah.Models
         [Display(Name = "Fabricante")]
         public int FabricanteID { get; set; }
         public Fabricante Fabricante { get; set; }
+        // Campo para deleção lógica
+        public bool Ativo { get; set; } = true;
     }
 }

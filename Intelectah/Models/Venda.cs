@@ -10,6 +10,8 @@ namespace Intelectah.Models
         [Required]
         [Display(Name = "Cliente")]
         public int ClienteID { get; set; }
+        // Campo para deleção lógica
+        public bool Ativo { get; set; } = true;
         public Cliente Cliente { get; set; }
 
         [Required]

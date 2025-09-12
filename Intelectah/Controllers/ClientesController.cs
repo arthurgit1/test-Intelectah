@@ -20,7 +20,7 @@ namespace Intelectah.Controllers
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clientes.ToListAsync());
+            return View(await _context.Clientes.Where(c => c.Ativo).ToListAsync());
         }
 
         // GET: Clientes/Details/5
@@ -46,6 +46,10 @@ namespace Intelectah.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ClienteID,Nome,CPF,Endereco,Telefone,Email")] Cliente cliente)
         {
+            if (_context.Clientes.Any(c => c.CPF == cliente.CPF && c.Ativo))
+            {
+                ModelState.AddModelError("CPF", "Já existe um cliente ativo com este CPF.");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(cliente);
@@ -68,10 +72,13 @@ namespace Intelectah.Controllers
         // POST: Clientes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClienteID,Nome,CPF,Endereco,Telefone,Email")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("ClienteID,Nome,CPF,Endereco,Telefone,Email,Ativo")] Cliente cliente)
         {
             if (id != cliente.ClienteID) return NotFound();
-
+            if (_context.Clientes.Any(c => c.CPF == cliente.CPF && c.ClienteID != id && c.Ativo))
+            {
+                ModelState.AddModelError("CPF", "Já existe um cliente ativo com este CPF.");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -111,7 +118,8 @@ namespace Intelectah.Controllers
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente != null)
             {
-                _context.Clientes.Remove(cliente);
+                cliente.Ativo = false;
+                _context.Clientes.Update(cliente);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

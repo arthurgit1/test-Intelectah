@@ -23,6 +23,9 @@ namespace Intelectah.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasMaxLength(14)
@@ -68,6 +71,9 @@ namespace Intelectah.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsAtivo")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -125,6 +131,9 @@ namespace Intelectah.Migrations
                     b.Property<int>("Ano")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Cor")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -160,6 +169,9 @@ namespace Intelectah.Migrations
                 {
                     b.Property<int>("VendaID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Ativo")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ClienteID")

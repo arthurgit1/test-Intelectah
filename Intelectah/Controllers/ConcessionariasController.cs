@@ -40,7 +40,8 @@ namespace Intelectah.Controllers
         // GET: Concessionarias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Concessionarias.ToListAsync());
+            // Exibir apenas registros ativos
+            return View(await _context.Concessionarias.Where(c => c.IsAtivo).ToListAsync());
         }
 
         // GET: Concessionarias/Details/5
@@ -64,8 +65,12 @@ namespace Intelectah.Controllers
         // POST: Concessionarias/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ConcessionariaID,Nome,Endereco,Telefone,Email")] Concessionaria concessionaria)
+        public async Task<IActionResult> Create([Bind("ConcessionariaID,Nome,Endereco,Telefone,Email,IsAtivo")] Concessionaria concessionaria)
         {
+            if (_context.Concessionarias.Any(c => c.Nome == concessionaria.Nome && c.IsAtivo))
+            {
+                ModelState.AddModelError("Nome", "Já existe uma concessionária ativa com este nome.");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(concessionaria);
@@ -88,10 +93,13 @@ namespace Intelectah.Controllers
         // POST: Concessionarias/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ConcessionariaID,Nome,Endereco,Telefone,Email")] Concessionaria concessionaria)
+        public async Task<IActionResult> Edit(int id, [Bind("ConcessionariaID,Nome,Endereco,Telefone,Email,IsAtivo")] Concessionaria concessionaria)
         {
             if (id != concessionaria.ConcessionariaID) return NotFound();
-
+            if (_context.Concessionarias.Any(c => c.Nome == concessionaria.Nome && c.ConcessionariaID != id && c.IsAtivo))
+            {
+                ModelState.AddModelError("Nome", "Já existe uma concessionária ativa com este nome.");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -131,7 +139,9 @@ namespace Intelectah.Controllers
             var concessionaria = await _context.Concessionarias.FindAsync(id);
             if (concessionaria != null)
             {
-                _context.Concessionarias.Remove(concessionaria);
+                // Deleção lógica
+                concessionaria.IsAtivo = false;
+                _context.Concessionarias.Update(concessionaria);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));

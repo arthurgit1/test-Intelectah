@@ -21,5 +21,8 @@ namespace Intelectah.Models
         [EmailAddress]
         [StringLength(100)]
         public string Email { get; set; }
+
+        // Campo para deleção lógica
+        public bool IsAtivo { get; set; } = true;
     }
 }
