@@ -3,6 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Intelectah.Models
 {
+    public enum TipoVeiculo
+    {
+        Carro = 1,
+        Moto = 2,
+        Caminhao = 3,
+        Onibus = 4,
+        Van = 5,
+        Outro = 99
+    }
+
     public class Veiculo
     {
         public int VeiculoID { get; set; }
@@ -25,6 +35,11 @@ namespace Intelectah.Models
 
         [Required]
         public decimal Preco { get; set; }
+
+        // Novo campo: Tipo de Veículo
+        [Required]
+        [Display(Name = "Tipo de Veículo")]
+        public TipoVeiculo Tipo { get; set; }
 
         // Relacionamento com Fabricante
         [Display(Name = "Fabricante")]

@@ -11,10 +11,30 @@ namespace Intelectah.Controllers
     public class ConcessionariasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly Intelectah.Services.ViaCepService _viaCepService;
 
-        public ConcessionariasController(ApplicationDbContext context)
+        public ConcessionariasController(ApplicationDbContext context, Intelectah.Services.ViaCepService viaCepService)
         {
             _context = context;
+            _viaCepService = viaCepService;
+        }
+        // GET: Concessionarias/BuscarEnderecoPorCep?cep=01001000
+        [HttpGet]
+        public async Task<IActionResult> BuscarEnderecoPorCep(string cep)
+        {
+            if (string.IsNullOrWhiteSpace(cep))
+                return Json(new { erro = true, mensagem = "CEP não informado." });
+            var endereco = await _viaCepService.BuscarEnderecoPorCepAsync(cep);
+            if (endereco == null || endereco.Erro == "true")
+                return Json(new { erro = true, mensagem = "CEP não encontrado." });
+            return Json(new
+            {
+                erro = false,
+                logradouro = endereco.Logradouro,
+                bairro = endereco.Bairro,
+                cidade = endereco.Localidade,
+                uf = endereco.Uf
+            });
         }
 
         // GET: Concessionarias

@@ -1,0 +1,199 @@
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Dashboard";
+    var vendasPorMes = ViewBag.VendasPorMes ?? new List<dynamic>();
+    var vendasPorTipo = ViewBag.VendasPorTipo ?? new List<dynamic>();
+    var vendasPorFabricante = ViewBag.VendasPorFabricante ?? new List<dynamic>();
+    var vendasPorConcessionaria = ViewBag.VendasPorConcessionaria ?? new List<dynamic>();
+    var totalClientes = ViewBag.TotalClientes ?? 0;
+    var now = DateTime.Now;
+
+    // Listas auxiliares para os gráficos
+    var vendasMesLabels = new List<string>();
+    var vendasMesData = new List<int>();
+    foreach (var v in vendasPorMes)
+    {
+        vendasMesLabels.Add($"{v.Mes}/{v.Ano}");
+        vendasMesData.Add((int)v.Total);
+    }
+    var vendasTipoLabels = new List<string>();
+    var vendasTipoData = new List<int>();
+    foreach (var v in vendasPorTipo)
+    {
+        vendasTipoLabels.Add(v.Tipo.ToString());
+        vendasTipoData.Add((int)v.Total);
+    }
+    var vendasFabricanteLabels = new List<string>();
+    var vendasFabricanteData = new List<int>();
+    foreach (var v in vendasPorFabricante)
+    {
+        vendasFabricanteLabels.Add(v.Fabricante.ToString());
+        vendasFabricanteData.Add((int)v.Total);
+    }
+    var vendasConcessionariaLabels = new List<string>();
+    var vendasConcessionariaData = new List<int>();
+    foreach (var v in vendasPorConcessionaria)
+    {
+        vendasConcessionariaLabels.Add(v.Concessionaria.ToString());
+        vendasConcessionariaData.Add((int)v.Total);
+    }
+}
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <form class="form-inline" method="get" id="exportForm">
+            <div class="form-group mr-2">
+                <label for="mes" class="mr-1">Mês:</label>
+                <select id="mes" name="mes" class="form-control">
+                    @for (int m = 1; m <= 12; m++)
+                    {
+                        if (m == now.Month)
+                        {
+                            <option value="@m" selected="selected">@m.ToString("D2")</option>
+                        }
+                        else
+                        {
+                            <option value="@m">@m.ToString("D2")</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group mr-2">
+                <label for="ano" class="mr-1">Ano:</label>
+                <select id="ano" name="ano" class="form-control">
+                    @for (int y = now.Year - 5; y <= now.Year; y++)
+                    {
+                        if (y == now.Year)
+                        {
+                            <option value="@y" selected="selected">@y</option>
+                        }
+                        else
+                        {
+                            <option value="@y">@y</option>
+                        }
+                    }
+                </select>
+            </div>
+            <button type="button" class="btn btn-success mr-2" onclick="exportar('pdf')">Exportar PDF</button>
+            <button type="button" class="btn btn-primary" onclick="exportar('excel')">Exportar Excel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function exportar(tipo) {
+        var mes = document.getElementById('mes').value;
+        var ano = document.getElementById('ano').value;
+        if (tipo === 'pdf') {
+            window.location = '/Dashboard/ExportPdf?mes=' + mes + '&ano=' + ano;
+        } else {
+            window.location = '/Dashboard/ExportExcel?mes=' + mes + '&ano=' + ano;
+        }
+    }
+</script>
+
+<h2>Dashboard de Relatórios</h2>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-header">Total de Clientes</div>
+            <div class="card-body">
+                <h4 class="card-title">@totalClientes</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Vendas por Mês (últimos 12 meses)</h4>
+        <canvas id="chartVendasMes"></canvas>
+    </div>
+    <div class="col-md-6">
+        <h4>Vendas por Tipo de Veículo</h4>
+        <canvas id="chartVendasTipo"></canvas>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h4>Vendas por Fabricante</h4>
+        <canvas id="chartVendasFabricante"></canvas>
+    </div>
+    <div class="col-md-6">
+        <h4>Vendas por Concessionária</h4>
+        <canvas id="chartVendasConcessionaria"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Vendas por Mês
+        const vendasMesLabels = @Html.Raw(JsonConvert.SerializeObject(vendasMesLabels));
+        const vendasMesData = @Html.Raw(JsonConvert.SerializeObject(vendasMesData));
+        new Chart(document.getElementById('chartVendasMes'), {
+            type: 'bar',
+            data: {
+                labels: vendasMesLabels,
+                datasets: [{
+                    label: 'Vendas',
+                    data: vendasMesData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                }]
+            }
+        });
+
+        // Vendas por Tipo
+        const vendasTipoLabels = @Html.Raw(JsonConvert.SerializeObject(vendasTipoLabels));
+        const vendasTipoData = @Html.Raw(JsonConvert.SerializeObject(vendasTipoData));
+        new Chart(document.getElementById('chartVendasTipo'), {
+            type: 'pie',
+            data: {
+                labels: vendasTipoLabels,
+                datasets: [{
+                    label: 'Vendas',
+                    data: vendasTipoData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)'
+                    ]
+                }]
+            }
+        });
+
+        // Vendas por Fabricante
+        const vendasFabricanteLabels = @Html.Raw(JsonConvert.SerializeObject(vendasFabricanteLabels));
+        const vendasFabricanteData = @Html.Raw(JsonConvert.SerializeObject(vendasFabricanteData));
+        new Chart(document.getElementById('chartVendasFabricante'), {
+            type: 'bar',
+            data: {
+                labels: vendasFabricanteLabels,
+                datasets: [{
+                    label: 'Vendas',
+                    data: vendasFabricanteData,
+                    backgroundColor: 'rgba(255, 206, 86, 0.7)'
+                }]
+            }
+        });
+
+        // Vendas por Concessionária
+        const vendasConcessionariaLabels = @Html.Raw(JsonConvert.SerializeObject(vendasConcessionariaLabels));
+        const vendasConcessionariaData = @Html.Raw(JsonConvert.SerializeObject(vendasConcessionariaData));
+        new Chart(document.getElementById('chartVendasConcessionaria'), {
+            type: 'bar',
+            data: {
+                labels: vendasConcessionariaLabels,
+                datasets: [{
+                    label: 'Vendas',
+                    data: vendasConcessionariaData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                }]
+            }
+        });
+    </script>
+}
