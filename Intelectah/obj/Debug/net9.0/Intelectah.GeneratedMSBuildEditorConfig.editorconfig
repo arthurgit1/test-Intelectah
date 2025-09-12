@@ -28,6 +28,26 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
+[D:/GitHub/test-Intelectah/Intelectah/Views/Concessionarias/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Concessionarias/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Concessionarias/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Concessionarias/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/GitHub/test-Intelectah/Intelectah/Views/Concessionarias/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uY2Vzc2lvbmFyaWFzXGluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/GitHub/test-Intelectah/Intelectah/Views/Fabricantes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFicmljYW50ZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
