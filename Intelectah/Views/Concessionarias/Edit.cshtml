@@ -4,42 +4,46 @@
     ViewData["Title"] = "Editar Concessionária";
 }
 
-<h2>Editar Concessionária</h2>
+<h2 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Editar Concessionária</h2>
 
-<form asp-action="Edit">
+<form asp-action="Edit" autocomplete="off">
     <input type="hidden" asp-for="ConcessionariaID" />
-    <div class="form-group">
-        <label asp-for="Nome"></label>
-        <input asp-for="Nome" class="form-control" />
-        <span asp-validation-for="Nome" class="text-danger"></span>
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label">Nome</label>
+        <input asp-for="Nome" class="form-control" placeholder="Digite o nome da concessionária" />
+        <span asp-validation-for="Nome" class="text-danger small"></span>
     </div>
-    <div class="form-group">
-        <label>CEP</label>
+    <div class="mb-3">
+        <label class="form-label">CEP</label>
         <div class="input-group">
             <input id="cep" name="cep" class="form-control" maxlength="8" placeholder="Somente números" />
-            <div class="input-group-append">
-                <button type="button" class="btn btn-outline-primary" onclick="buscarCep()">Buscar</button>
-            </div>
+            <button type="button" class="btn btn-outline-primary" onclick="buscarCep()">Buscar</button>
         </div>
         <small id="cepHelp" class="form-text text-muted">Preencha o CEP e clique em buscar para autocompletar o endereço.</small>
     </div>
-    <div class="form-group">
-        <label asp-for="Endereco"></label>
-        <input asp-for="Endereco" class="form-control" id="endereco" />
-        <span asp-validation-for="Endereco" class="text-danger"></span>
+    <div class="mb-3">
+        <label asp-for="Endereco" class="form-label">Endereço</label>
+        <input asp-for="Endereco" class="form-control" id="endereco" placeholder="Digite o endereço" />
+        <span asp-validation-for="Endereco" class="text-danger small"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Telefone"></label>
-        <input asp-for="Telefone" class="form-control" />
-        <span asp-validation-for="Telefone" class="text-danger"></span>
+    <div class="mb-3">
+        <label asp-for="Telefone" class="form-label">Telefone</label>
+        <input asp-for="Telefone" class="form-control" placeholder="Digite o telefone" />
+        <span asp-validation-for="Telefone" class="text-danger small"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">E-mail</label>
+        <input asp-for="Email" class="form-control" placeholder="Digite o e-mail" />
+        <span asp-validation-for="Email" class="text-danger small"></span>
     </div>
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle me-1"></i> Salvar
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
 </form>
 
 @section Scripts {

@@ -4,26 +4,32 @@
     ViewData["Title"] = "Detalhes do Fabricante";
 }
 
-<h2>Detalhes do Fabricante</h2>
+<h2 class="mb-4"><i class="bi bi-info-circle me-2"></i>Detalhes do Fabricante</h2>
 
-<div>
-    <h4>Fabricante</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Nome</dt>
-        <dd class="col-sm-10">@Model.Nome</dd>
-        <dt class="col-sm-2">País de Origem</dt>
-        <dd class="col-sm-10">@Model.PaisOrigem</dd>
-        <dt class="col-sm-2">Ano de Fundação</dt>
-        <dd class="col-sm-10">@Model.AnoFundacao</dd>
-        <dt class="col-sm-2">Website</dt>
-        <dd class="col-sm-10">
-            @if (!string.IsNullOrEmpty(Model.Website))
-            {
-                <a href="@Model.Website" target="_blank">@Model.Website</a>
-            }
-        </dd>
-    </dl>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Nome</dt>
+            <dd class="col-sm-9">@Model.Nome</dd>
+            <dt class="col-sm-3">País de Origem</dt>
+            <dd class="col-sm-9">@Model.PaisOrigem</dd>
+            <dt class="col-sm-3">Ano de Fundação</dt>
+            <dd class="col-sm-9">@Model.AnoFundacao</dd>
+            <dt class="col-sm-3">Website</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.Website))
+                {
+                    <a href="@Model.Website" target="_blank">@Model.Website</a>
+                }
+            </dd>
+        </dl>
+    </div>
 </div>
-<a asp-action="Edit" asp-route-id="@Model.FabricanteID" class="btn btn-warning">Editar</a>
-<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.FabricanteID" class="btn btn-warning">
+        <i class="bi bi-pencil-square me-1"></i> Editar
+    </a>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+</div>

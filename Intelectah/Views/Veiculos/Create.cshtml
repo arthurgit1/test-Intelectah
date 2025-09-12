@@ -13,28 +13,28 @@
             <div class="card-body">
                 <form asp-action="Create" autocomplete="off">
                     <div class="mb-3">
-                        <label asp-for="Modelo" class="form-label"></label>
-                        <input asp-for="Modelo" class="form-control" />
+                        <label asp-for="Modelo" class="form-label">Modelo</label>
+                        <input asp-for="Modelo" class="form-control" placeholder="Digite o modelo do veículo" />
                         <span asp-validation-for="Modelo" class="text-danger small"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Cor" class="form-label"></label>
-                        <input asp-for="Cor" class="form-control" />
+                        <label asp-for="Cor" class="form-label">Cor</label>
+                        <input asp-for="Cor" class="form-control" placeholder="Digite a cor" />
                         <span asp-validation-for="Cor" class="text-danger small"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Ano" class="form-label"></label>
-                        <input asp-for="Ano" class="form-control" />
+                        <label asp-for="Ano" class="form-label">Ano</label>
+                        <input asp-for="Ano" class="form-control" placeholder="Digite o ano" />
                         <span asp-validation-for="Ano" class="text-danger small"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Placa" class="form-label"></label>
-                        <input asp-for="Placa" class="form-control" />
+                        <label asp-for="Placa" class="form-label">Placa</label>
+                        <input asp-for="Placa" class="form-control" placeholder="Digite a placa" />
                         <span asp-validation-for="Placa" class="text-danger small"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Preco" class="form-label"></label>
-                        <input asp-for="Preco" class="form-control" />
+                        <label asp-for="Preco" class="form-label">Preço</label>
+                        <input asp-for="Preco" class="form-control" placeholder="Digite o preço" />
                         <span asp-validation-for="Preco" class="text-danger small"></span>
                     </div>
                     <div class="mb-3">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="d-flex justify-content-end gap-2">
                         <button type="submit" class="btn btn-success">
-                            <i class="bi bi-check-circle me-1"></i>Salvar
+                            <i class="bi bi-check-circle me-1"></i> Salvar
                         </button>
                         <a asp-action="Index" class="btn btn-secondary">
                             <i class="bi bi-arrow-left"></i> Voltar

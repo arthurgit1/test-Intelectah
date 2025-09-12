@@ -4,27 +4,34 @@
     ViewData["Title"] = "Excluir Cliente";
 }
 
-<h2>Excluir Cliente</h2>
+<h2 class="mb-4"><i class="bi bi-trash me-2"></i>Excluir Cliente</h2>
 
-<h3>Tem certeza que deseja excluir este cliente?</h3>
-<div>
-    <h4>Cliente</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Nome</dt>
-        <dd class="col-sm-10">@Model.Nome</dd>
-        <dt class="col-sm-2">CPF</dt>
-        <dd class="col-sm-10">@Model.CPF</dd>
-        <dt class="col-sm-2">Endereço</dt>
-        <dd class="col-sm-10">@Model.Endereco</dd>
-        <dt class="col-sm-2">Telefone</dt>
-        <dd class="col-sm-10">@Model.Telefone</dd>
-        <dt class="col-sm-2">Email</dt>
-        <dd class="col-sm-10">@Model.Email</dd>
-    </dl>
+<div class="alert alert-warning d-flex align-items-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    Tem certeza que deseja excluir este cliente?
 </div>
-<form asp-action="Delete">
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Nome</dt>
+            <dd class="col-sm-9">@Model.Nome</dd>
+            <dt class="col-sm-3">CPF</dt>
+            <dd class="col-sm-9">@Model.CPF</dd>
+            <dt class="col-sm-3">Endereço</dt>
+            <dd class="col-sm-9">@Model.Endereco</dd>
+            <dt class="col-sm-3">Telefone</dt>
+            <dd class="col-sm-9">@Model.Telefone</dd>
+            <dt class="col-sm-3">E-mail</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+        </dl>
+    </div>
+</div>
+<form asp-action="Delete" class="d-flex gap-2">
     <input type="hidden" asp-for="ClienteID" />
-    <button type="submit" class="btn btn-danger">Excluir</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Excluir
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-x-circle"></i> Cancelar
+    </a>
 </form>

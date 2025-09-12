@@ -4,23 +4,29 @@
     ViewData["Title"] = "Detalhes do Cliente";
 }
 
-<h2>Detalhes do Cliente</h2>
+<h2 class="mb-4"><i class="bi bi-info-circle me-2"></i>Detalhes do Cliente</h2>
 
-<div>
-    <h4>Cliente</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Nome</dt>
-        <dd class="col-sm-10">@Model.Nome</dd>
-        <dt class="col-sm-2">CPF</dt>
-        <dd class="col-sm-10">@Model.CPF</dd>
-        <dt class="col-sm-2">Endereço</dt>
-        <dd class="col-sm-10">@Model.Endereco</dd>
-        <dt class="col-sm-2">Telefone</dt>
-        <dd class="col-sm-10">@Model.Telefone</dd>
-        <dt class="col-sm-2">Email</dt>
-        <dd class="col-sm-10">@Model.Email</dd>
-    </dl>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Nome</dt>
+            <dd class="col-sm-9">@Model.Nome</dd>
+            <dt class="col-sm-3">CPF</dt>
+            <dd class="col-sm-9">@Model.CPF</dd>
+            <dt class="col-sm-3">Endereço</dt>
+            <dd class="col-sm-9">@Model.Endereco</dd>
+            <dt class="col-sm-3">Telefone</dt>
+            <dd class="col-sm-9">@Model.Telefone</dd>
+            <dt class="col-sm-3">E-mail</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+        </dl>
+    </div>
 </div>
-<a asp-action="Edit" asp-route-id="@Model.ClienteID" class="btn btn-warning">Editar</a>
-<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.ClienteID" class="btn btn-warning">
+        <i class="bi bi-pencil-square me-1"></i> Editar
+    </a>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+</div>

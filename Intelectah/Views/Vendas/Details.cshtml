@@ -4,23 +4,29 @@
     ViewData["Title"] = "Detalhes da Venda";
 }
 
-<h2>Detalhes da Venda</h2>
+<h2 class="mb-4"><i class="bi bi-info-circle me-2"></i>Detalhes da Venda</h2>
 
-<div>
-    <h4>Venda</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Cliente</dt>
-        <dd class="col-sm-10">@Model.Cliente?.Nome</dd>
-        <dt class="col-sm-2">Veículo</dt>
-        <dd class="col-sm-10">@Model.Veiculo?.Modelo</dd>
-        <dt class="col-sm-2">Concessionária</dt>
-        <dd class="col-sm-10">@Model.Concessionaria?.Nome</dd>
-        <dt class="col-sm-2">Data da Venda</dt>
-        <dd class="col-sm-10">@Model.DataVenda.ToShortDateString()</dd>
-        <dt class="col-sm-2">Valor</dt>
-        <dd class="col-sm-10">@Model.Valor.ToString("C")</dd>
-    </dl>
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Cliente</dt>
+            <dd class="col-sm-9">@Model.Cliente?.Nome</dd>
+            <dt class="col-sm-3">Veículo</dt>
+            <dd class="col-sm-9">@Model.Veiculo?.Modelo</dd>
+            <dt class="col-sm-3">Concessionária</dt>
+            <dd class="col-sm-9">@Model.Concessionaria?.Nome</dd>
+            <dt class="col-sm-3">Data da Venda</dt>
+            <dd class="col-sm-9">@Model.DataVenda.ToShortDateString()</dd>
+            <dt class="col-sm-3">Valor</dt>
+            <dd class="col-sm-9">@Model.Valor.ToString("C")</dd>
+        </dl>
+    </div>
 </div>
-<a asp-action="Edit" asp-route-id="@Model.VendaID" class="btn btn-warning">Editar</a>
-<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model.VendaID" class="btn btn-warning">
+        <i class="bi bi-pencil-square me-1"></i> Editar
+    </a>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Voltar
+    </a>
+</div>

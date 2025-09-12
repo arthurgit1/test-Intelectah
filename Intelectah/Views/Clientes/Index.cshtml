@@ -1,11 +1,11 @@
 @model IEnumerable<Intelectah.Models.Cliente>
 
 @{
-    ViewData["Title"] = "Lista de Clientes";
+    ViewData["Title"] = "Clientes";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0"><i class="bi bi-people-fill me-2"></i>Lista de Clientes</h2>
+    <h2 class="mb-0"><i class="bi bi-people-fill me-2"></i>Clientes</h2>
     <a asp-action="Create" class="btn btn-primary shadow-sm">
         <i class="bi bi-person-plus-fill me-1"></i> Novo Cliente
     </a>
@@ -19,7 +19,7 @@
                 <th><i class="bi bi-credit-card-2-front"></i> CPF</th>
                 <th><i class="bi bi-geo-alt"></i> Endereço</th>
                 <th><i class="bi bi-telephone"></i> Telefone</th>
-                <th><i class="bi bi-envelope"></i> Email</th>
+                <th><i class="bi bi-envelope"></i> E-mail</th>
                 <th class="text-end">Ações</th>
             </tr>
         </thead>
