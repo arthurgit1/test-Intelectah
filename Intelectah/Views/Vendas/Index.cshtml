@@ -1,0 +1,41 @@
+@model IEnumerable<Intelectah.Models.Venda>
+
+@{
+    ViewData["Title"] = "Lista de Vendas";
+}
+
+<h2>Lista de Vendas</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nova Venda</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Veículo</th>
+            <th>Concessionária</th>
+            <th>Data da Venda</th>
+            <th>Valor</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Cliente?.Nome</td>
+            <td>@item.Veiculo?.Modelo</td>
+            <td>@item.Concessionaria?.Nome</td>
+            <td>@item.DataVenda.ToShortDateString()</td>
+            <td>@item.Valor.ToString("C")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VendaID" class="btn btn-warning btn-sm">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.VendaID" class="btn btn-info btn-sm">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@item.VendaID" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
