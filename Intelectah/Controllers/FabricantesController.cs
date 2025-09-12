@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Intelectah.Data;
 using Intelectah.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Intelectah.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FabricantesController : Controller
     {
         private readonly ApplicationDbContext _context;

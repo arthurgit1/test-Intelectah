@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Intelectah.Data;
 using Intelectah.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Intelectah.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VeiculosController : Controller
     {
         private readonly ApplicationDbContext _context;
